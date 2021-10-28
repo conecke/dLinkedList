@@ -1,9 +1,9 @@
 
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include "dLinkedList.h"
+#include <limits.h>
 
 //Returns a pointer to the last node in the list
 static dlList ptrToEnd(dlList);
@@ -20,7 +20,7 @@ struct dlListStruct{
 dlList createList(){
     return NULL;
 }
-//Adds a new node to the front of a list, or if the list is currently empty sets it as the first node
+//Adds a new node to the front of a list, or if the list is currently empty sets it as the first node, and returns location of first node
 dlList addAtFront(dlList usrList, int value){
     dlList newNode = malloc(sizeof(struct dlListStruct));
     newNode->data = value;
@@ -29,12 +29,12 @@ dlList addAtFront(dlList usrList, int value){
         newNode->next = NULL;
         return newNode;
     }
-    dlList ptr = usrList;
-    if (ptr->prev != NULL) ptr = ptrToStart(usrList);
+    dlList ptr = ptrToStart(usrList);
     newNode->next = ptr;
+    ptr->prev = newNode;
     return newNode;
 }
-//Adds a new node to the end of a list, or if the list is currently empty sets it as the first node
+//Adds a new node to the end of a list, or if the list is currently empty sets it as the first node, and returns location of last node
 dlList addAtEnd(dlList usrList, int value){
     dlList newNode = malloc(sizeof(struct dlListStruct));
     newNode->data = value;
@@ -43,14 +43,56 @@ dlList addAtEnd(dlList usrList, int value){
         newNode->prev = NULL;
         return newNode;
     }
-    dlList ptr = usrList;
-    if (ptr->next != NULL) ptr = ptrToEnd(usrList);
+    dlList ptr = ptrToEnd(usrList);
     newNode->prev = ptr;
+    ptr->next = newNode;
     return newNode;
 }
-dlList removeAtFront(dlList);
-dlList removeAtEnd(dlList);
-
+//Removes the first node and returns the location of the new first node
+dlList removeAtFront(dlList usrList){
+    if (usrList != NULL){
+        dlList ptr = ptrToStart(usrList);
+        if (ptr != NULL) ptr = ptr->next;
+        if (ptr != NULL) free(ptr->prev);
+        return ptr;
+    }
+    return NULL;
+}
+//Removes the last node and returns the location of the new last node
+dlList removeAtEnd(dlList usrList){
+    if (usrList != NULL){
+        dlList ptr = ptrToEnd(usrList);
+        if (ptr != NULL) ptr = ptr->prev;
+        if (ptr != NULL) free(ptr->next);
+        return ptr;
+    }
+    return NULL;
+}
+//Prints out the entire list starting from the front
+void printListFtoB(dlList usrList){
+    if(usrList != NULL){
+        dlList ptr = ptrToStart(usrList);
+        while (ptr->next != NULL){
+            printf("%d ", getData(ptr));
+            ptr=ptr->next;
+        }
+    }
+}
+//Prints out the entire list strating from the end
+void printListBtoF(dlList usrList){
+    if(usrList != NULL){
+        dlList ptr = ptrToEnd(usrList);
+        while (ptr->prev != NULL){ 
+            printf("%d ", getData(ptr));
+            ptr = ptr->prev;
+        }
+    }
+}
+//Returns current items data, or INT_MIN if the list is NULL
+int getData(dlList usrList){
+    if(usrList != NULL) return usrList->data;
+    return INT_MIN;
+}
 static dlList ptrToEnd(dlList usrList){
     if (usrList == NULL){
         return NULL;
