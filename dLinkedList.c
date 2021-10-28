@@ -72,7 +72,7 @@ dlList removeAtEnd(dlList usrList){
 void printListFtoB(dlList usrList){
     if(usrList != NULL){
         dlList ptr = ptrToStart(usrList);
-        while (ptr->next != NULL){
+        while (ptr!= NULL){
             printf("%d ", getData(ptr));
             ptr=ptr->next;
         }
@@ -82,7 +82,7 @@ void printListFtoB(dlList usrList){
 void printListBtoF(dlList usrList){
     if(usrList != NULL){
         dlList ptr = ptrToEnd(usrList);
-        while (ptr->prev != NULL){ 
+        while (ptr != NULL){ 
             printf("%d ", getData(ptr));
             ptr = ptr->prev;
         }
@@ -92,6 +92,42 @@ void printListBtoF(dlList usrList){
 int getData(dlList usrList){
     if(usrList != NULL) return usrList->data;
     return INT_MIN;
+}
+//Sorts list using bubble sort and returns location of new first element
+dlList bubbleSort(dlList usrList){
+    return NULL;
+}
+//Swaps the current node with the node in front
+dlList swapNodeF(dlList usrList){
+    if (usrList != NULL){
+        dlList n1 = usrList;
+        dlList nf = n1->next;
+        dlList nb = n1->prev;
+        if (nf == NULL) return n1;;
+        n1->prev = nf;
+        n1->next = nf->next;
+        if (nf -> next != NULL) nf->next->prev = n1;
+        nf->next = n1;
+        nf->prev = nb;
+        nb->next = nf;
+    }
+    return usrList;    
+}
+//Swaps the node with the node behind
+dlList swapNodeB(dlList usrList){
+    if (usrList != NULL){
+        dlList n1 = usrList;
+        dlList n2 = usrList->next;
+        dlList nb = n1->prev;
+        if (nb == NULL) return n1;
+        n1->next = nb;
+        n1->prev = nb->prev;
+        if (nb->prev != NULL) nb->prev->next = n1;
+        nb->next = n2;
+        nb->prev = n1;
+        n2->prev = nb;
+    }
+    return usrList;
 }
 static dlList ptrToEnd(dlList usrList){
     if (usrList == NULL){

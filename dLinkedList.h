@@ -26,8 +26,7 @@ void printListFtoB(dlList);
 void printListBtoF(dlList);
 //Returns current items data
 int getData(dlList);
-
-
-
+//Sorts list using bubble sort and returns location of new first element
+dlList bubbleSort(dlList);
 
 #endif
