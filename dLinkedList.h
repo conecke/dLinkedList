@@ -6,9 +6,7 @@ Attempted Implementation of a doubly linked list data structure, started on 10/2
 
 #include <stdlib.h>
 
-
-
-
+typedef struct dlNodeStruct *dlNode;
 typedef struct dlListStruct *dlList;
 //Initializes a list to Null;
 dlList createList();
@@ -25,7 +23,7 @@ void printListFtoB(dlList);
 //Prints out the entire list strating from the end
 void printListBtoF(dlList);
 //Returns current items data
-int getData(dlList);
+int getSize(dlList);
 //Sorts list using bubble sort and returns location of new first element
 dlList bubbleSort(dlList);
 
