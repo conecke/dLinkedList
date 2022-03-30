@@ -22,7 +22,7 @@ dlList removeAtEnd(dlList);
 void printListFtoB(dlList);
 //Prints out the entire list strating from the end
 void printListBtoF(dlList);
-//Returns current items data
+//Returns size of list
 int getSize(dlList);
 //Sorts list using bubble sort and returns location of new first element
 dlList bubbleSort(dlList);

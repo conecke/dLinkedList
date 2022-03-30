@@ -32,7 +32,7 @@ dlList createList(){
 }
 //Adds a new node to the front of a list, or if the list is currently empty sets it as the first node, and returns location of first node
 dlList addAtFront(dlList usrList, int value){
-    dlNode newNode = malloc(sizeof(struct dlListStruct));
+    dlNode newNode = malloc(sizeof(struct dlNodeStruct));
     newNode->data = value;
     newNode->prev = NULL;
     if (usrList->count == 0){
@@ -50,7 +50,7 @@ dlList addAtFront(dlList usrList, int value){
 }
 //Adds a new node to the end of a list, or if the list is currently empty sets it as the first node, and returns location of last node
 dlList addAtEnd(dlList usrList, int value){
-    dlNode newNode = malloc(sizeof(struct dlListStruct));
+    dlNode newNode = malloc(sizeof(struct dlNodeStruct));
     newNode->data = value;
     newNode->next = NULL;
     if (usrList->count == 0){
@@ -114,13 +114,15 @@ void printListBtoF(dlList usrList){
         }
     }
 }
-//Returns current items data, or INT_MIN if the list is NULL
+//Returns lists size, or INT_MIN if the list is NULL
 int getSize(dlList usrList){
-    return usrList->count;
+    return usrList==NULL?INT_MIN:usrList->count;
 }
 //Sorts list using bubble sort
 dlList bubbleSort(dlList usrList){
-    //printf("isSorted: %s", isSorted(usrList)?"True\n":"False\n");
+    #ifdef MYDBG
+    printf("isSorted: %s", isSorted(usrList)?"True\n":"False\n");
+    #endif
     dlNode ptr = usrList->head;
     while (!isSorted(usrList)){
         if(ptr->next != NULL && ptr->data > ptr->next->data){
@@ -128,7 +130,6 @@ dlList bubbleSort(dlList usrList){
         }
         ptr = ptr->next;
         if (ptr == NULL) ptr = usrList->head;
-        
     }
     return usrList;
 }
